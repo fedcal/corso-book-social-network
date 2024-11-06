@@ -1,0 +1,19 @@
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+springdoc:
+  default-produces-media-type: application/json
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api/v1/
+
+application:
+  security:
+    jwt:
+      secret-key: 193A1F83B13AAB618B77F6EEE2B99
+      expiration: 8640000
