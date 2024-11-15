@@ -24,15 +24,15 @@ spring:
           trust: "*"
         auth: true
         starttls:
-          enable: true
-          connectiontimout: 5000
-          timeout: 3000
-          writetimeout: 5000
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000
+        writetimeout: 5000
 
 application:
   security:
     jwt:
-      secret-key: 193A1F83B13AAB618B77F6EEE2B99
+      secret-key: SekXCnSydpc4aP9ol8AuTtMFMl8omHewz57Rf+JD8Xc=
       expiration: 8640000
   mailing:
     frontend:
