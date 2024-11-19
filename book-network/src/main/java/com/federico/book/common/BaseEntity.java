@@ -23,7 +23,7 @@ import java.time.LocalDate;
 public class BaseEntity {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
 
     @CreatedDate
     @Column(updatable = false, nullable = false)
