@@ -1,5 +1,6 @@
 package com.federico.book.book;
 
+import com.federico.book.file.FileUtils;
 import com.federico.book.history.BookTransactionHistory;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class BookMapper {
                 .archived(book.isArchived())
                 .shareable(book.isShareable())
                 .owner(book.getOwner().fullName())
+                .cover(FileUtils.readFileFromLaction(book.getBookCover()))
                 .build();
     }
 

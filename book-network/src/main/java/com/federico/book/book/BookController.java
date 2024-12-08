@@ -1,12 +1,14 @@
 package com.federico.book.book;
 
 import com.federico.book.common.PageResponse;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("books")
@@ -86,5 +88,11 @@ public class BookController {
     @PatchMapping("/borrow/return/approve/{book-id}")
     public ResponseEntity<Long> approveReturnBorrowBook(@PathVariable("book-id") Long bookId, Authentication connectedUser){
         return ResponseEntity.ok(service.approveReturnBorrowBook(bookId,connectedUser));
+    }
+
+    @PostMapping(value = "/cover/{book-id}", consumes = "multipart/form-data")
+    public ResponseEntity<?> uploadBookCoverPicture(@PathVariable("book-id") Long bookId, @Parameter() @RequestPart("file") MultipartFile file, Authentication connectedUser){
+        service.uploadBookCoverPicture(bookId,file,connectedUser);
+        return ResponseEntity.accepted().build();
     }
 }

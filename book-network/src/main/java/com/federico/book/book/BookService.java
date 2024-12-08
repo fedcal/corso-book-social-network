@@ -2,6 +2,7 @@ package com.federico.book.book;
 
 import com.federico.book.common.PageResponse;
 import com.federico.book.exception.OperationNotPermittedException;
+import com.federico.book.file.FileStorageService;
 import com.federico.book.history.BookTransactionHistory;
 import com.federico.book.history.BookTransactionHistoryRepository;
 import com.federico.book.user.User;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,7 @@ public class BookService {
     private final BookMapper bookMapper;
     private final BookRepository bookRepository;
     private final BookTransactionHistoryRepository bookTransactionHistoryRepository;
+    private final FileStorageService fileStorageService;
 
     public Long save(BookRequest request, Authentication connectedUser) {
         User user = ((User) connectedUser.getPrincipal());
@@ -182,6 +185,15 @@ public class BookService {
 
         bookTransactionHistory.setReturnApproved(true);
         return bookTransactionHistoryRepository.save(bookTransactionHistory).getId();
+
+    }
+
+    public void uploadBookCoverPicture(Long bookId, MultipartFile file, Authentication connectedUser) {
+        Book book = bookRepository.findById(bookId).orElseThrow(()-> new EntityNotFoundException("Libro non trovato con id:: "+bookId));
+        User user = ((User) connectedUser.getPrincipal());
+        String bookCover = fileStorageService.saveFile(file, user.getId());
+        book.setBookCover(bookCover);
+        bookRepository.save(book);
 
     }
 }
