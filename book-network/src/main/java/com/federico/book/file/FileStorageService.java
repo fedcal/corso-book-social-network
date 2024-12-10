@@ -45,10 +45,11 @@ public class FileStorageService {
         try {
             Files.write(targetPath, sourceFile.getBytes());
             log.info("File salvato in "+targetFilePath);
-            return targetFilePath;
+
         }catch (IOException e){
             log.error("File non salvato", e);
         }
+        return targetFilePath;
     }
 
     private String getFileExtension(String fileName) {
